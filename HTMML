@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEGACALCULATOR - Estudiantes M.C.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts para estilo manuscrito y amigable -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Kalam:wght@400;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #f3f8f8;
+            background-image: 
+                radial-gradient(#cbd5e1 1px, transparent 1px), 
+                radial-gradient(#cbd5e1 1px, #f3f8f8 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        .handwritten-title {
+            font-family: 'Kalam', cursive;
+        }
+
+        .bubble-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Estilos tipo libreta / sketch */
+        .sketch-card {
+            border: 3px solid #334155;
+            border-radius: 18px;
+            box-shadow: 4px 4px 0px #334155;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .sketch-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0px #334155;
+        }
+
+        .sketch-button {
+            border: 2px solid #1e293b;
+            box-shadow: 3px 3px 0px #1e293b;
+            font-weight: 700;
+            transition: all 0.15s ease;
+        }
+
+        .sketch-button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #1e293b;
+        }
+
+        .sketch-input {
+            border: 2px solid #475569;
+            border-radius: 10px;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .sketch-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Indicador movible */
+        .drag-handle {
+            cursor: move;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 p-3 sm:p-6">
+
+    <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- HEADER BANNER -->
+        <header class="sketch-card bg-amber-100/90 p-4 sm:p-6 relative overflow-hidden">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+                
+                <!-- Título e ícono -->
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-400 text-white p-3 rounded-2xl border-2 border-slate-800 shadow-md transform -rotate-3">
+                        <i class="fa-solid font-bold text-3xl fa-apple-whole"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl sm:text-5xl font-black tracking-wider handwritten-title text-amber-900 drop-shadow-sm">
+                            MEGACALCULATOR
+                        </h1>
+                        <p class="text-lg font-bold text-amber-800 tracking-wide bubble-font">
+                            Estudiantes M.C. <span class="text-sm font-normal text-slate-600 block sm:inline">"-Promediamos tus notas="</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mensaje motivacional superior derecho -->
+                <div class="bg-yellow-200/90 border-2 border-slate-800 p-3 rounded-xl max-w-xs text-center transform rotate-1 shadow-sm">
+                    <p class="text-sm font-bold text-slate-800">
+                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>
+                        Priorizar nuestro trabajo es mantener tus notas a salvo
+                        <i class="fa-solid fa-thumbs-up text-amber-600 ml-1"></i>
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT GRID -->
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- SECCIÓN 1: AGREGAR EJERCICIO (Formulario - Cuadro Verde) -->
+            <section class="lg:col-span-5 sketch-card bg-emerald-50 border-emerald-800 p-5 flex flex-col justify-between">
+                <div>
+                    <!-- Encabezado del módulo -->
+                    <div class="flex justify-between items-center mb-4 pb-2 border-b-2 border-dashed border-emerald-300 drag-handle">
+                        <h2 class="text-2xl font-bold handwritten-title text-emerald-900 flex items-center gap-2">
+                            <i class="fa-solid fa-arrows-up-down-left-right text-sm text-emerald-600"></i>
+                            ● Agregar Ejercicio:
+                        </h2>
+                        <span class="text-xs bg-emerald-200 text-emerald-800 font-bold px-2 py-1 rounded-full border border-emerald-400">
+                            ↑ movible
+                        </span>
+                    </div>
+
+                    <!-- Formularios de Input -->
+                    <div class="space-y-4">
+                        <!-- Fecha y Nombre Estudiante -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Fecha:</label>
+                                <input type="date" id="inputFecha" class="w-full p-2 text-sm sketch-input font-semibold text-slate-700" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Nombre estudiante:</label>
+                                <input type="text" id="inputNombre" placeholder="Insert name" class="w-full p-2 text-sm sketch-input font-medium" />
+                            </div>
+                        </div>
+
+                        <!-- Estructura de Fórmula para Periodos -->
+                        <div class="mt-4 bg-white/80 p-4 rounded-xl border-2 border-emerald-200">
+                            <label class="block text-center font-bold text-emerald-900 mb-2">Nota del Periodo</label>
+                            
+                            <!-- Expresión en Fracción -->
+                            <div class="flex flex-col items-center">
+                                <div class="flex items-center gap-1 sm:gap-2 flex-wrap justify-center mb-1">
+                                    <div class="text-center">
+                                        <span class="text-xs font-bold text-slate-500 block">Periodo 1</span>
+                                        <input type="number" id="p1" min="0" max="100" step="0.1" placeholder="0.0" class="w-16 sm:w-20 p-2 text-center sketch-input font-bold text-slate-800" />
+                                    </div>
+                                    <span class="text-xl font-bold text-emerald-700">+</span>
+                                    <div class="text-center">
+                                        <span class="text-xs font-bold text-slate-500 block">Periodo 2</span>
+                                        <input type="number" id="p2" min="0" max="100" step="0.1" placeholder="0.0" class="w-16 sm:w-20 p-2 text-center sketch-input font-bold text-slate-800" />
+                                    </div>
+                                    <span class="text-xl font-bold text-emerald-700">+</span>
+                                    <div class="text-center">
+                                        <span class="text-xs font-bold text-slate-500 block">Periodo 3</span>
+                                        <input type="number" id="p3" min="0" max="100" step="0.1" placeholder="0.0" class="w-16 sm:w-20 p-2 text-center sketch-input font-bold text-slate-800" />
+                                    </div>
+                                </div>
+                                <!-- Línea de División -->
+                                <div class="w-full max-w-xs h-1 bg-slate-800 rounded my-1"></div>
+                                <span class="text-lg font-black text-slate-800">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="mt-6 pt-4 border-t-2 border-emerald-200/80">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        <button onclick="limpiarFormulario()" class="sketch-button bg-rose-400 hover:bg-rose-500 text-white py-2 px-3 rounded-xl text-sm flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-xmark"></i> Cancelar
+                        </button>
+                        <button onclick="calcularNotas()" class="sketch-button bg-emerald-500 hover:bg-emerald-600 text-white py-2 px-3 rounded-xl text-sm flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-calculator"></i> Calcular
+                        </button>
+                        <button onclick="guardarEjercicio()" class="sketch-button bg-teal-600 hover:bg-teal-700 text-white py-2 px-3 rounded-xl text-sm flex items-center justify-center gap-1 col-span-2 sm:col-span-1">
+                            <i class="fa-solid fa-floppy-disk"></i> Guardar
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-2">
+                        <button id="btnEditar" onclick="prepararEdicion()" class="sketch-button bg-lime-500 hover:bg-lime-600 text-white py-2 px-3 rounded-xl text-sm flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-pencil"></i> Editar
+                        </button>
+                        <button onclick="borrarSeleccionado()" class="sketch-button bg-red-500 hover:bg-red-600 text-white py-2 px-3 rounded-xl text-sm flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-trash"></i> Borrar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: RESULTADO (Cuadro Naranja / Coral) -->
+            <section class="lg:col-span-4 sketch-card bg-orange-100 border-orange-800 p-5 flex flex-col justify-between relative">
+                <div>
+                    <!-- Encabezado del Resultado -->
+                    <div class="flex justify-between items-center mb-3 pb-2 border-b-2 border-dashed border-orange-300 drag-handle">
+                        <h2 class="text-2xl font-bold handwritten-title text-orange-950 flex items-center gap-2">
+                            <i class="fa-solid fa-square-poll-vertical text-orange-700"></i>
+                            Resultado:
+                        </h2>
+                        <i class="fa-solid fa-note-sticky text-orange-600 text-xl"></i>
+                    </div>
+
+                    <!-- Representación de la Fórmula -->
+                    <div class="bg-white/70 p-3 rounded-xl border border-orange-300 text-center mb-4">
+                        <span class="text-xs font-bold text-orange-800 uppercase tracking-wider block">Fórmula</span>
+                        <div class="inline-block mt-1">
+                            <div class="font-bold text-slate-800 text-sm border-b-2 border-slate-800 px-2">
+                                ∑ Suma de todas las notas
+                            </div>
+                            <div class="font-bold text-slate-800 text-sm text-center">3</div>
+                        </div>
+                    </div>
+
+                    <!-- Caja de Ejemplo / Cálculo Activo -->
+                    <div class="bg-amber-50/90 border-2 border-orange-300 p-4 rounded-xl space-y-2">
+                        <h3 class="font-bold text-orange-900 border-b border-orange-200 pb-1 text-sm uppercase">Ejemplo / Procedimiento</h3>
+                        
+                        <div class="text-xs sm:text-sm font-semibold text-slate-700 space-y-1">
+                            <p class="flex justify-between"><span>Periodo 1:</span> <span id="resP1" class="font-bold">--</span></p>
+                            <p class="flex justify-between"><span>Periodo 2:</span> <span id="resP2" class="font-bold">--</span></p>
+                            <p class="flex justify-between"><span>Periodo 3:</span> <span id="resP3" class="font-bold">--</span></p>
+                        </div>
+
+                        <!-- Línea divisora y cálculo -->
+                        <div class="border-t-2 border-slate-400 pt-2 mt-2">
+                            <p class="text-xs font-mono text-slate-600 text-center mb-1" id="resSumaTexto">-- + -- + -- = --</p>
+                            <p class="text-xs font-mono text-slate-600 text-center" id="resDivTexto">-- ÷ 3 = --</p>
+                        </div>
+
+                        <!-- Resultado Final y Aprobación -->
+                        <div class="mt-3 pt-2 border-t-2 border-orange-300 flex items-center justify-between">
+                            <span class="text-base font-bold text-slate-800">Resultado:</span>
+                            <span id="resFinal" class="text-2xl font-black text-orange-900">0.0</span>
+                        </div>
+
+                        <!-- Estado Pasó / No Pasó -->
+                        <div id="badgeEstado" class="mt-2 text-center p-2 rounded-lg font-bold text-sm bg-slate-200 text-slate-600">
+                            Ingresa notas y calcula
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Indicador de Plataforma -->
+                <div class="mt-4 pt-2 text-center border-t border-orange-200 text-xs font-bold text-orange-800">
+                    <i class="fa-solid fa-mobile-screen mr-1"></i> Plataforma movible
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: LISTA DE EJERCICIOS + MASCOTA (Cuadro Morado) -->
+            <section class="lg:col-span-3 flex flex-col gap-6">
+                
+                <!-- Tabla Lista de Ejercicios -->
+                <div class="sketch-card bg-purple-50 border-purple-800 p-4 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3 pb-2 border-b-2 border-dashed border-purple-300">
+                            <h2 class="text-xl font-bold handwritten-title text-purple-900">
+                                Lista de ejercicios
+                            </h2>
+                            <i class="fa-solid fa-list-check text-purple-600"></i>
+                        </div>
+
+                        <!-- Tabla de Registros -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="border-b-2 border-purple-200 text-purple-900 font-bold">
+                                        <th class="pb-1">Nombre</th>
+                                        <th class="pb-1 text-center">Nota</th>
+                                        <th class="pb-1 text-center">Fecha</th>
+                                        <th class="pb-1 text-center">✓/✗</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaEjercicios" class="divide-y divide-purple-100">
+                                    <!-- Se puebla dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center text-xs font-bold text-purple-700 pt-2 border-t border-purple-200">
+                        Desplaza para más información <i class="fa-solid fa-arrow-down text-purple-500"></i>
+                    </div>
+                </div>
+
+                <!-- Personaje / Mascota con Globo de Texto -->
+                <div class="bg-teal-50 border-2 border-slate-800 p-4 rounded-2xl flex items-center gap-3 shadow-md relative">
+                    <!-- Icono o avatar de estudiante -->
+                    <div class="relative flex-shrink-0">
+                        <div class="w-16 h-16 bg-teal-300 border-2 border-slate-800 rounded-full flex items-center justify-center overflow-hidden">
+                            <i class="fa-solid fa-user-graduate text-3xl text-slate-800"></i>
+                        </div>
+                        <span class="absolute -bottom-1 -right-1 bg-yellow-400 text-slate-800 text-xs px-1 font-bold rounded border border-slate-800">35</span>
+                    </div>
+
+                    <!-- Globo de texto (Callout) -->
+                    <div class="bg-white border-2 border-slate-800 p-2 rounded-xl text-xs font-bold text-slate-800 relative shadow-sm">
+                        <p class="handwritten-title text-sm leading-tight text-teal-900">
+                            "¡Cuidas tus notas y serán calculadas!"
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- NOTIFICACIÓN DE MENSAJE (remplaza alert) -->
+    <div id="toastNotification" class="fixed bottom-4 right-4 bg-slate-900 text-white px-4 py-3 rounded-xl border-2 border-slate-700 shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2 z-50">
+        <i id="toastIcon" class="fa-solid fa-circle-info text-yellow-400"></i>
+        <span id="toastMessage" class="text-sm font-semibold">Mensaje de notificación</span>
+    </div>
+
+    <!-- JAVASCRIPT DE FUNCIONALIDAD -->
+    <script>
+        // Arreglo para guardar los registros
+        let listaEjercicios = [
+            { id: 1, nombre: "Juan P.", p1: 50, p2: 50, p3: 50, nota: 50, fecha: "2026-10-10", aprobo: true },
+            { id: 2, nombre: "Maria L.", p1: 20, p2: 30, p3: 20, nota: 23.3, fecha: "2026-10-12", aprobo: false }
+        ];
+
+        let idSeleccionado = null;
+        let calculoActual = null;
+
+        // Establecer fecha por defecto al cargar
+        window.onload = function() {
+            const hoy = new Date().toISOString().split('T')[0];
+            document.getElementById('inputFecha').value = hoy;
+            renderizarTabla();
+        };
+
+        // Mostrar Toast emergente en vez de alert()
+        function mostrarToast(mensaje, tipo = 'info') {
+            const toast = document.getElementById('toastNotification');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMessage.textContent = mensaje;
+
+            if (tipo === 'success') {
+                toastIcon.className = "fa-solid fa-circle-check text-green-400";
+            } else if (tipo === 'error') {
+                toastIcon.className = "fa-solid fa-circle-xmark text-red-400";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-info text-yellow-400";
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Función para Calcular Notas
+        function calcularNotas() {
+            const p1 = parseFloat(document.getElementById('p1').value) || 0;
+            const p2 = parseFloat(document.getElementById('p2').value) || 0;
+            const p3 = parseFloat(document.getElementById('p3').value) || 0;
+
+            const suma = p1 + p2 + p3;
+            const promedio = (suma / 3).toFixed(1);
+            
+            // Criterio de aprobación: >= 3.0 o >= 50 dependiendo de la escala (asumimos 3.0 o 50)
+            // Soporta escala de 0-5 y 0-100
+            const esEscala100 = p1 > 5 || p2 > 5 || p3 > 5;
+            const notaMinima = esEscala100 ? 50 : 3.0;
+            const aprobo = parseFloat(promedio) >= notaMinima;
+
+            // Actualizar interfaz de Resultados
+            document.getElementById('resP1').textContent = p1;
+            document.getElementById('resP2').textContent = p2;
+            document.getElementById('resP3').textContent = p3;
+            document.getElementById('resSumaTexto').textContent = `${p1} + ${p2} + ${p3} = ${suma}`;
+            document.getElementById('resDivTexto').textContent = `${suma} ÷ 3 = ${promedio}`;
+            document.getElementById('resFinal').textContent = promedio;
+
+            const badge = document.getElementById('badgeEstado');
+            if (aprobo) {
+                badge.className = "mt-2 text-center p-2 rounded-lg font-bold text-sm bg-emerald-200 text-emerald-900 border border-emerald-400";
+                badge.innerHTML = "Pasaste = <i class='fa-solid fa-check text-emerald-700 text-lg ml-1'></i>";
+            } else {
+                badge.className = "mt-2 text-center p-2 rounded-lg font-bold text-sm bg-rose-200 text-rose-900 border border-rose-400";
+                badge.innerHTML = "No Pasaste = <i class='fa-solid fa-xmark text-rose-700 text-lg ml-1'></i>";
+            }
+
+            // Guardar en objeto temporal
+            calculoActual = {
+                p1, p2, p3, suma, promedio: parseFloat(promedio), aprobo
+            };
+
+            mostrarToast("Notas calculadas correctamente", "success");
+            return calculoActual;
+        }
+
+        // Guardar Ejercicio en la lista
+        function guardarEjercicio() {
+            const nombre = document.getElementById('inputNombre').value.trim();
+            const fecha = document.getElementById('inputFecha').value;
+
+            if (!nombre) {
+                mostrarToast("Por favor ingresa el nombre del estudiante", "error");
+                return;
+            }
+
+            // Si no ha calculado, se calcula automáticamente
+            const resultado = calculoActual || calcularNotas();
+
+            if (idSeleccionado !== null) {
+                // Actualizar existente
+                const index = listaEjercicios.findIndex(item => item.id === idSeleccionado);
+                if (index !== -1) {
+                    listaEjercicios[index] = {
+                        id: idSeleccionado,
+                        nombre: nombre,
+                        p1: resultado.p1,
+                        p2: resultado.p2,
+                        p3: resultado.p3,
+                        nota: resultado.promedio,
+                        fecha: fecha,
+                        aprobo: resultado.aprobo
+                    };
+                    mostrarToast("Ejercicio actualizado", "success");
+                }
+                idSeleccionado = null;
+            } else {
+                // Crear nuevo
+                const nuevoItem = {
+                    id: Date.now(),
+                    nombre: nombre,
+                    p1: resultado.p1,
+                    p2: resultado.p2,
+                    p3: resultado.p3,
+                    nota: resultado.promedio,
+                    fecha: fecha,
+                    aprobo: resultado.aprobo
+                };
+                listaEjercicios.push(nuevoItem);
+                mostrarToast("Ejercicio guardado en la lista", "success");
+            }
+
+            renderizarTabla();
+            limpiarFormulario();
+        }
+
+        // Renderizar la tabla de ejercicios
+        function renderizarTabla() {
+            const tbody = document.getElementById('tablaEjercicios');
+            tbody.innerHTML = '';
+
+            if (listaEjercicios.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-purple-400 italic">
+                            No hay ejercicios guardados
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            listaEjercicios.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = `hover:bg-purple-100/60 cursor-pointer transition ${idSeleccionado === item.id ? 'bg-purple-200 font-bold' : ''}`;
+                tr.onclick = () => seleccionarFila(item.id);
+
+                const iconoEstado = item.aprobo 
+                    ? `<span class="text-emerald-600 font-bold"><i class="fa-solid fa-check"></i></span>`
+                    : `<span class="text-rose-600 font-bold"><i class="fa-solid fa-xmark"></i></span>`;
+
+                tr.innerHTML = `
+                    <td class="py-2 font-medium text-slate-800 truncate max-w-[80px]">${item.nombre}</td>
+                    <td class="py-2 text-center font-bold text-purple-900">${item.nota}</td>
+                    <td class="py-2 text-center text-slate-500 text-[10px]">${item.fecha}</td>
+                    <td class="py-2 text-center">${iconoEstado}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Seleccionar una fila de la tabla
+        function seleccionarFila(id) {
+            idSeleccionado = id;
+            const item = listaEjercicios.find(e => e.id === id);
+            if (item) {
+                document.getElementById('inputNombre').value = item.nombre;
+                document.getElementById('inputFecha').value = item.fecha;
+                document.getElementById('p1').value = item.p1;
+                document.getElementById('p2').value = item.p2;
+                document.getElementById('p3').value = item.p3;
+                
+                calcularNotas();
+                renderizarTabla();
+            }
+        }
+
+        // Cargar datos seleccionados en los inputs para edición
+        function prepararEdicion() {
+            if (idSeleccionado === null) {
+                mostrarToast("Selecciona primero un registro de la lista para editar", "info");
+                return;
+            }
+            mostrarToast("Modifica los campos y presiona 'Guardar' para actualizar", "info");
+        }
+
+        // Borrar el elemento seleccionado
+        function borrarSeleccionado() {
+            if (idSeleccionado === null) {
+                mostrarToast("Selecciona un elemento de la lista para borrar", "error");
+                return;
+            }
+
+            listaEjercicios = listaEjercicios.filter(item => item.id !== idSeleccionado);
+            idSeleccionado = null;
+            limpiarFormulario();
+            renderizarTabla();
+            mostrarToast("Registro eliminado con éxito", "success");
+        }
+
+        // Limpiar formulario y reiniciar estado
+        function limpiarFormulario() {
+            document.getElementById('inputNombre').value = '';
+            document.getElementById('p1').value = '';
+            document.getElementById('p2').value = '';
+            document.getElementById('p3').value = '';
+            
+            document.getElementById('resP1').textContent = '--';
+            document.getElementById('resP2').textContent = '--';
+            document.getElementById('resP3').textContent = '--';
+            document.getElementById('resSumaTexto').textContent = '-- + -- + -- = --';
+            document.getElementById('resDivTexto').textContent = '-- ÷ 3 = --';
+            document.getElementById('resFinal').textContent = '0.0';
+
+            const badge = document.getElementById('badgeEstado');
+            badge.className = "mt-2 text-center p-2 rounded-lg font-bold text-sm bg-slate-200 text-slate-600";
+            badge.textContent = "Ingresa notas y calcula";
+
+            idSeleccionado = null;
+            calculoActual = null;
+            renderizarTabla();
+        }
+    </script>
+</body>
+</html>
