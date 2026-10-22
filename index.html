@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEGACALCULATOR | Estudiantes M.C.</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+<div class="page">
+  <header class="top-banner">
+    <div class="apple-logo" aria-hidden="true">●</div>
+    <div class="brand"><h1>MEGACALCULATOR</h1><p><strong>Estudiantes M.C.</strong> <span>-"Promediamos tus notas="-</span></p></div>
+    <div class="banner-note"><span>★</span> Priorizar nuestro trabajo es mantener<br> tus notas a salvo 👍</div>
+  </header>
+
+  <main class="dashboard" id="dashboard">
+    <section class="card exercise-card" id="exerciseCard">
+      <div class="card-heading green-heading">
+        <h2><span>✣</span> • Agregar Ejercicio:</h2>
+        <button class="move-toggle" id="moveToggle" type="button">↕ movible</button>
+      </div>
+      <form id="exerciseForm" novalidate>
+        <input type="hidden" id="recordId">
+        <div class="field-row">
+          <div class="field"><label for="date">Fecha:</label><input type="date" id="date" required></div>
+          <div class="field"><label for="student">Nombre estudiante:</label><input type="text" id="student" placeholder="Insert name" maxlength="70" required></div>
+        </div>
+        <div class="period-box">
+          <h3>Nota del Periodo</h3>
+          <div class="period-inputs">
+            <div class="period-field"><label for="p1">Periodo 1</label><input id="p1" type="number" min="10.34" max="50" step="0.01" value="35" required></div>
+            <span class="plus">+</span>
+            <div class="period-field"><label for="p2">Periodo 2</label><input id="p2" type="number" min="10.34" max="50" step="0.01" value="35" required></div>
+            <span class="plus">+</span>
+            <div class="period-field"><label for="p3">Periodo 3</label><input id="p3" type="number" min="10.34" max="50" step="0.01" value="35" required></div>
+          </div>
+          <div class="fraction-line"></div><strong class="divisor">3</strong>
+          <p class="grade-limits">Mínima: <b>10,34</b> · Máxima: <b>50</b> · Aprueba desde <b>35</b></p>
+        </div>
+        <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+        <div class="button-row">
+          <button class="action cancel" id="cancelButton" type="button">✕ Cancelar</button>
+          <button class="action calculate" id="calculateButton" type="button">▦ Calcular</button>
+          <button class="action save" id="saveButton" type="submit">▣ Guardar</button>
+          <button class="action edit" id="editButton" type="button">✎ Editar</button>
+          <button class="action delete" id="deleteButton" type="button">▤ Borrar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card result-card">
+      <div class="card-heading orange-heading"><h2><span class="chart-icon">▥</span> Resultado:</h2><span class="corner-icon">◩</span></div>
+      <div class="formula-box"><span class="mini-title">FÓRMULA</span><div class="fraction"><span>∑ Suma de todas las notas</span><b>3</b></div></div>
+      <div class="procedure-box">
+        <h3>EJEMPLO / PROCEDIMIENTO</h3>
+        <div class="procedure-row"><span>Periodo 1:</span><strong id="showP1">35</strong></div>
+        <div class="procedure-row"><span>Periodo 2:</span><strong id="showP2">35</strong></div>
+        <div class="procedure-row"><span>Periodo 3:</span><strong id="showP3">35</strong></div>
+        <div class="math-steps"><p id="sumLine">35 + 35 + 35 = 105</p><p id="divisionLine">105 ÷ 3 = 35,0</p></div>
+        <div class="result-line"><span>Resultado:</span><strong id="average">35,0</strong></div>
+        <div class="pass-banner" id="passBanner">Pasaste = ✓</div>
+      </div>
+      <p class="mobile-label">▯ Plataforma movible</p>
+    </section>
+
+    <aside class="right-column">
+      <section class="card list-card">
+        <div class="card-heading purple-heading"><h2>Lista de ejercicios</h2><span>☷</span></div>
+        <div class="list-scroll"><table><thead><tr><th>Nombre</th><th>Nota</th><th>Fecha</th><th>✓/X</th></tr></thead><tbody id="exerciseList"><tr class="empty"><td colspan="4">Aún no hay ejercicios guardados.</td></tr></tbody></table></div>
+        <p class="scroll-note">Selecciona una fila para editar o borrar ↓</p>
+        <div class="list-tools"><button type="button" id="exportButton">⬇ Exportar CSV</button><button type="button" id="clearAllButton">Vaciar lista</button></div>
+      </section>
+      <section class="encouragement"><div class="graduate" aria-hidden="true">🎓</div><div class="quote">"¡Cuida tus notas y serán calculadas!"</div><span class="tiny-score">35</span></section>
+    </aside>
+  </main>
+  <footer>MEGACALCULATOR · Tus notas, organizadas y calculadas con claridad.</footer>
+</div>
+</body>
+</html>
